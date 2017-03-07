@@ -1,8 +1,11 @@
 Markdown Extra
 ==============
 
-Set of extensions for ``python-markdown``.
+.. image:: https://readthedocs.org/projects/markdown-extra/badge/?version=latest
+   :target: http://markdown-extra.readthedocs.io/en/latest/?badge=latest
+   :alt: Documentation Status
 
+Set of extensions for ``python-markdown``.
 
 Features
 --------
