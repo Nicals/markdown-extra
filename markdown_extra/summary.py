@@ -50,7 +50,7 @@ class SummaryPreprocessor(Preprocessor):
                 new_lines.append(line)
 
         if summary:
-            self.markdown.summary = '\r'.join(summary)
+            self.markdown.summary = '\n'.join(summary)
         else:
             self.markdown.summary = None
 

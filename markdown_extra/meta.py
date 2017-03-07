@@ -57,7 +57,7 @@ class MetaPreprocessor(Preprocessor):
                 if new_lines or not (not line and not new_lines):
                     new_lines.append(line)
 
-        self.markdown.meta = yaml.load('\r'.join(meta))
+        self.markdown.meta = yaml.load('\n'.join(meta))
 
         return new_lines
 

@@ -28,9 +28,9 @@ class TestSummaryPreprocessor:
         preproc = summary.SummaryPreprocessor()
         preproc.markdown = Mock()
 
-        preproc.run(['foo', '', ' [summary] ', 'hello', '', 'bar'])
+        preproc.run(['foo', '', ' [summary] ', 'hello', 'world', '', 'bar'])
 
-        assert preproc.markdown.summary == 'hello'
+        assert preproc.markdown.summary == 'hello\nworld'
 
 
 class TestSummaryTreeProcessor:

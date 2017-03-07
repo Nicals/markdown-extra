@@ -15,24 +15,26 @@ Once the document is parsed, the metadata is save as a ``meta`` property of
 the markdown instance used to convert the file.
 
 
-.. code:: python
+.. doctest::
 
     >>> import markdown
     >>> md_content = """---
-
-    author: "John Doe"
-    tags:
-      - "first-tag"
-      - "other-tag"
-
-    ---
-
-    First paragraph of the document goes here
-    """
+    ...
+    ...     author: "John Doe"
+    ...     tags:
+    ...       - "first-tag"
+    ...       - "other-tag"
+    ...
+    ... ---
+    ...
+    ... First paragraph of the document goes here
+    ... """
     >>> md = markdown.Markdown(extensions=['markdown_extra.meta'])
     >>> html = md.convert(md_content)
-    >>> md.meta
-    {'author': 'John Doe', 'tags': ['first-tag', 'other-tag']}
+    >>> md.meta['author']
+    'John Doe'
+    >>> md.meta['tags']
+    ['first-tag', 'other-tag']
 
 
 Summary
@@ -48,19 +50,19 @@ property of the markdown instance used.
 This first paragraph will not be rendered.
 
 
-.. code:: python
+.. doctest::
 
     >>> import markdown
     >>> md_content = """
-    [summary]
-    This is the summary.
-    It says very important stuff.
-
-    This is the first paragraph of the document.
-    """
-    >>> md = markdown.Markdown(extensions=['markdown_extra.summary']
+    ... [summary]
+    ... This is the summary.
+    ... It says very important stuff.
+    ...
+    ... This is the first paragraph of the document.
+    ... """
+    >>> md = markdown.Markdown(extensions=['markdown_extra.summary'])
     >>> md.convert(md_content)
-    '<p>This is the first paragraph of the document</p>'
+    '<p>This is the first paragraph of the document.</p>'
     >>> md.summary
     'This is the summary.\nIt says very important stuff.'
 
