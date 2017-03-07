@@ -1,25 +1,34 @@
-"""This extensions adds some meta data support to markdown.
+"""This extension adds metadata support inside markdown documents.
 
-Some YAML formatted metadata can be added in a document.
-The YAML content must be enclosed into '---' separators.
-If some metadata are defined, the very first line of the document MUST
-be the opening '---' separator.
+Metadata is a ``YAML`` formatted datastructure defined at the very beginning
+of the document.
+It must be defined between ``---`` YAML separators.
+The first ``---`` must be the first line of the document to be correctly parsed.
 
-.. code::
+Once the document is parsed, the metadata is save as a ``meta`` property of
+the markdown instance used to convert the file.
 
-    ---
-    author: "John Doe"
-    tags:
-        - first-tag
-        - second-tag
-    ---
+.. doctest::
 
-    First paragraph of the document.
+    >>> import markdown
+    >>> md_content = '''---
+    ...
+    ...     author: "John Doe"
+    ...     tags:
+    ...       - "first-tag"
+    ...       - "other-tag"
+    ...
+    ... ---
+    ...
+    ... First paragraph of the document goes here
+    ... '''
+    >>> md = markdown.Markdown(extensions=['markdown_extra.meta'])
+    >>> html = md.convert(md_content)
+    >>> md.meta['author']
+    'John Doe'
+    >>> md.meta['tags']
+    ['first-tag', 'other-tag']
 
-The metadata will not be rendered in the final HTML document.
-
-The metadata will be set into a ``meta`` attribute of the markdown instance
-used.
 """
 
 from markdown.extensions import Extension

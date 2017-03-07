@@ -1,22 +1,33 @@
-"""This extensions adds a summary support to markdown.
+"""This extension is used to extract a summary from a markdown file.
 
-A summary is a markdown paragraph that will be extracted from the markup text
-and stored in a summary attribute of the markdown object.
+A summary is a paragraph tagged with a ``[summary]`` element in its first line.
+The summary won't be rendered in the final HTML document.
+After the parsing occures, the summary can be accessed in a ``summary``
+property of the markdown instance used.
 
-A summary is defined with a [summary] tag:
+This first paragraph will not be rendered.
 
-.. code::
 
-    [summary]
-    This is the summary paragraph.
+.. doctest::
 
-    And this is the rest of the file.
+    >>> import markdown
+    >>> md_content = '''
+    ... [summary]
+    ... This is the summary.
+    ... It says very important stuff.
+    ...
+    ... This is the first paragraph of the document.
+    ... '''
+    >>> md = markdown.Markdown(extensions=['markdown_extra.summary'])
+    >>> md.convert(md_content)
+    '<p>This is the first paragraph of the document.</p>'
+    >>> md.summary
+    'This is the summary.\\nIt says very important stuff.'
 
-The summary paragraph will be removed from the final html text.
+If no ``summary`` tag is found in the document, the first paragraph will be
+set in the ``summary`` property of the markdown instance.
+In this case, the paragraph will not be removed from the final HTML produced.
 
-If no summary tag is set, the first paragraph will be extracted and the text
-inside will be used as a summary. This first paragraph is not removed from
-the final HTML rendering.
 """
 
 from markdown.extensions import Extension
