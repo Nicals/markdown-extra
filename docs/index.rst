@@ -15,7 +15,7 @@ Installation is done with pip.
     $ pip install markdown-extra
 
 This package is intended to run in both python 2 and 3.
-It has been tested under python 2.7, 2.5+ and is expected to run fine on
+It has been tested under python 2.7, 3.5+ and is expected to run fine on
 previous versions.
 
 .. toctree::
