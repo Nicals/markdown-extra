@@ -7,8 +7,11 @@ Set of extensions for ``python-markdown``.
 Features
 --------
 
-  + YAML meta support
-  + summary extraction
+``MetaExtension`` adds metadata support in YAML format.
+
+``SummaryExtension`` allows to extract a summary from a markdown file.
+
+Check out the doc: `<https://markdown-extra.readthedocs.io>`_
 
 
 Installation
