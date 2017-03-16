@@ -36,39 +36,50 @@ from markdown.preprocessors import Preprocessor
 import yaml
 
 
-__all__ = ['MetaExtension']
+__all__ = ['MetaExtension', 'inject_meta']
+
+
+def extract_meta(lines):
+    """Extract metadata from markdown content.
+
+    Args:
+        lines (list of string): List of lines from the markdown content
+
+    Returns:
+        tuple: A two elements tupple.
+
+        The first element is the parsed metadata or None if the document
+        doesn't contains the metadata header.
+
+        The second element is the markdown document without its metadata
+        headers. The document is returned as a list of strings.
+    """
+    inside_meta = True
+    meta = []
+    new_lines = []
+
+    if lines[0] != '---':
+        return None, lines
+
+    for line in lines[1:]:
+        if line == '---':
+            inside_meta = False
+            continue
+
+        if inside_meta:
+            meta.append(line)
+        else:
+            if new_lines or not (not line and not new_lines):
+                new_lines.append(line)
+
+    return yaml.load('\n'.join(meta)), new_lines
 
 
 class MetaPreprocessor(Preprocessor):
     def run(self, lines):
-        self.markdown.meta = None
-        inside_meta = True
-        meta = []
-        new_lines = []
+        self.markdown.meta, content_lines = extract_meta(lines)
 
-        if lines[0] != '---':
-            return lines
-
-        for line_nb, line in enumerate(lines):
-            # skip first line as we already know it's the delimiter
-            if line_nb == 0:
-                continue
-
-            # end of meta
-            if line == '---':
-                inside_meta = False
-                continue
-
-            if inside_meta:
-                meta.append(line)
-            else:
-                # prevent appending empty lines following the meta header
-                if new_lines or not (not line and not new_lines):
-                    new_lines.append(line)
-
-        self.markdown.meta = yaml.load('\n'.join(meta))
-
-        return new_lines
+        return content_lines
 
 
 class MetaExtension(Extension):
@@ -78,3 +89,37 @@ class MetaExtension(Extension):
 
 def makeExtension(*args, **kwargs):
     return MetaExtension(*args, **kwargs)
+
+
+def inject_meta(md_content, meta, update=False):
+    """Injects metadata into a markdown document.
+
+    Args:
+        md_content (string): Markdown content.
+        meta (dict): Metadta to inject. If None, existing metadata will be
+            removed
+        update (bool): if set to True, any existing meta data in `md_content`
+            will be upgrade with the `meta` dict.
+            If False, metadata will be replaced.
+
+    Returns:
+        string: The updated markdown content.
+    """
+    old_meta, md_lines = extract_meta(md_content.splitlines())
+
+    if meta is None:
+        return '\n'.join(md_lines)
+
+    if update is True:
+        old_meta.update(meta)
+        meta = old_meta
+
+    return """---
+
+{meta}
+---
+
+{content}
+""".format(
+        meta=yaml.dump(meta, default_flow_style=False, indent=4),
+        content='\n'.join(md_lines))

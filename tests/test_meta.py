@@ -30,3 +30,68 @@ class TestMetaPreprocessor:
         lines = preproc.run(['---', 'foo: bar', '---', '', 'Paragraph'])
 
         assert lines == ['Paragraph']
+
+
+class TestInjectMeta:
+    def test_injects_meta(self):
+        metadata = {'foo': 'bar', 'ham': ['spam']}
+        md_content = """---
+foo: bar
+---
+
+And a paragraph
+"""
+
+        assert meta.inject_meta(md_content, metadata) == """---
+
+foo: bar
+ham:
+- spam
+
+---
+
+And a paragraph
+"""
+
+    def test_injects_new_meta(self):
+        metadata = {'foo': 'bar', 'ham': ['spam']}
+        md_content = "A paragraph"
+
+        assert meta.inject_meta(md_content, metadata) == """---
+
+foo: bar
+ham:
+- spam
+
+---
+
+A paragraph
+"""
+
+    def test_inject_updated_meta(self):
+        metadata = {'foo': 'bar', 'ham': 'spam'}
+        md_content = """---
+foo: foo
+---
+
+A paragraph
+"""
+
+        assert meta.inject_meta(md_content, metadata, update=True) == """---
+
+foo: bar
+ham: spam
+
+---
+
+A paragraph
+"""
+
+    def test_removes_meta(self):
+        md_content = """---
+foo: bar
+---
+A paragraph
+"""
+
+        assert meta.inject_meta(md_content, None) == "A paragraph"
