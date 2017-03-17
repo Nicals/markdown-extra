@@ -58,10 +58,12 @@ def extract_meta(lines):
     meta = []
     new_lines = []
 
-    if lines[0] != '---':
+    # find first non empty line
+    first_line = next((index for index, line in enumerate(lines) if line.strip()), 0)
+    if lines[first_line] != '---':
         return None, lines
 
-    for line in lines[1:]:
+    for line in lines[first_line + 1:]:
         if line == '---':
             inside_meta = False
             continue

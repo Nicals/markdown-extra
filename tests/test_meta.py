@@ -32,6 +32,20 @@ class TestMetaPreprocessor:
         assert lines == ['Paragraph']
 
 
+class TestExtractMeta:
+    def test_allows_blank_lines(self):
+        metadata, md = meta.extract_meta(['', '', '---', 'foo: bar', 'bar:', '    - baz', '---'])
+
+        assert metadata == {'foo': 'bar', 'bar': ['baz']}
+        assert md == []
+
+    def test_empty_lines(self):
+        metadata, md = meta.extract_meta(['', '', ''])
+
+        assert metadata is None
+        assert md == ['', '', '']
+
+
 class TestInjectMeta:
     def test_injects_meta(self):
         metadata = {'foo': 'bar', 'ham': ['spam']}
