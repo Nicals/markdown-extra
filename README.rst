@@ -8,6 +8,9 @@ Markdown Extra
 .. image:: https://badge.fury.io/py/markdown-extra.svg
    :target: https://badge.fury.io/py/markdown-extra
    :alt: Version
+   
+.. image:: https://travis-ci.org/Nicals/markdown-extra.svg?branch=master
+   :target: https://travis-ci.org/Nicals/markdown-extra
 
 Set of extensions for ``python-markdown``.
 
