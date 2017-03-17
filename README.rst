@@ -5,6 +5,10 @@ Markdown Extra
    :target: http://markdown-extra.readthedocs.io/en/latest/?badge=latest
    :alt: Documentation Status
 
+.. image:: https://badge.fury.io/py/markdown-extra.svg
+   :target: https://badge.fury.io/py/markdown-extra
+   :alt: Version
+
 Set of extensions for ``python-markdown``.
 
 Features
