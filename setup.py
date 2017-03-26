@@ -28,4 +28,8 @@ setup(
         'markdown',
         'pyYAML',
     ],
+    extras_require={
+        'tests': ['mock;python_version<"3.3"', 'pytest'],
+        'docs': ['sphinx'],
+    },
 )
