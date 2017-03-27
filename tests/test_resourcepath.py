@@ -27,7 +27,7 @@ def test_overrides_options():
 
 def test_sets_extracts_path():
     md = Mock()
-    tree = ElementTree.fromstring('<html><a href="foo/bar">baz</a></html>')
+    tree = ElementTree.fromstring('<html><div><a href="foo/bar">baz</a></div></html>')
     tree_proc = resource_path.ResourcePathTreeProcessor(
         md,
         (('a', 'href'),),
@@ -38,17 +38,17 @@ def test_sets_extracts_path():
 
 
 def test_resolves_resource_path():
-    tree = ElementTree.fromstring('<html><a href="foo/bar">baz</a></html>')
+    tree = ElementTree.fromstring('<html><div><a href="foo/bar">baz</a></div></html>')
     tree_proc = resource_path.ResourcePathTreeProcessor(
-        Mock(), (('a', 'href'),), '/ham/spam/')
+        Mock(), (('a', 'href'),), '/ham/spam')
     tree_proc.run(tree)
 
-    assert tree.find('a').get('href') == '/ham/spam/foo/bar'
+    assert tree.find('div/a').get('href') == '/ham/spam/foo/bar'
 
 
 def test_absolute_path_are_ignored():
     md = Mock()
-    tree = ElementTree.fromstring('<html><img src="/foo/bar" /></html>')
+    tree = ElementTree.fromstring('<html><div><img src="/foo/bar" /></div></html>')
     tree_proc = resource_path.ResourcePathTreeProcessor(
         md, (('img', 'src'),), '/ham/spam')
     tree_proc.run(tree)
@@ -58,7 +58,7 @@ def test_absolute_path_are_ignored():
 
 def test_uri_are_ignored():
     md = Mock()
-    tree = ElementTree.fromstring('<html><img src="http://example.org/foo" /></html>')
+    tree = ElementTree.fromstring('<html><div><img src="http://example.org/foo" /></div></html>')
     tree_proc = resource_path.ResourcePathTreeProcessor(
         md, (('img', 'src'),), '/ham/spam')
     tree_proc.run(tree)

@@ -15,3 +15,9 @@ Summary
 -------
 
 .. automodule:: markdown_extra.summary
+
+
+Resource Path
+-------------
+
+.. automodule:: markdown_extra.resource_path
