@@ -27,8 +27,7 @@ Features
 
 ``SummaryExtension`` allows to extract a summary from a markdown file.
 
-``ResourcePathExtension`` allows to perform various operations on file path
-   such as images or links.
+``ResourcePathExtension`` allows to perform various operations on file path such as images or links.
 
 Check out the doc: `<https://markdown-extra.readthedocs.io>`_
 
