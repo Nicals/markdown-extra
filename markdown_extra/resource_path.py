@@ -1,7 +1,7 @@
 """This extension allows to manage local resource path in markdown files.
 
 The first goal of this extension is to transform relative path in markdown
-files into absolute path.
+files into absolute path given a required root directory.
 Additionaly, this module will track all modified path for futher processing
 in a ``resource_path`` attribute of the markdown object.
 
@@ -63,13 +63,21 @@ from markdown.treeprocessors import Treeprocessor
 
 
 class ResourcePathTreeProcessor(Treeprocessor):
-    def __init__(self, md, resource_tags, root_path):
+    def __init__(self, md, resource_tags, root_path=None):
+        """
+        Args:
+            md (markdown.Markdow):
+            resource_tags (iterable): An iterable of tag definition. A tag
+                definition is a (tag, attribute) tuple.
+            rout_path (str): root path to convert absolute path resources.
+                Can be None no path conversion is needed.
+        """
         self.md = md
         self.resource_tags = resource_tags
         self.root_path = root_path
         # make sure the root path ends with a '/'. This is required
         # when using urllib.parse.urljoin
-        if not self.root_path.endswith('/'):
+        if self.root_path is not None and not self.root_path.endswith('/'):
             self.root_path = self.root_path + '/'
         super(ResourcePathTreeProcessor, self).__init__(md)
 
@@ -85,9 +93,12 @@ class ResourcePathTreeProcessor(Treeprocessor):
                 parsed = urlparse(path)
                 if parsed.scheme or parsed.path.startswith('/'):
                     continue
-                new_path = urljoin(self.root_path, path)
+                if self.root_path is not None:
+                    new_path = urljoin(self.root_path, path)
+                    tag.set(attr_name, new_path)
+                else:
+                    new_path = None
                 self.md.resource_path.append((path, new_path))
-                tag.set(attr_name, new_path)
 
 
 class ResourcePathExtension(Extension):
