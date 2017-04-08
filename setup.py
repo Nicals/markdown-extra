@@ -7,7 +7,7 @@ project_dir = os.path.dirname(os.path.abspath(__file__))
 
 setup(
     name='markdown-extra',
-    version='0.2.0',
+    version='0.3.0',
     description='Set of extensions for markdown',
     long_description=open(os.path.join(project_dir, 'README.rst')).read(),
     url='https://github.com/Nicals/markdown-meta',

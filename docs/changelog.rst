@@ -1,8 +1,8 @@
 Changelog
 =========
 
-dev
----
+0.3.0 - 2017-04-08
+------------------
 
    + add ``markdown_extra.resource_path`` extension
 
