@@ -85,8 +85,12 @@ class MetaPreprocessor(Preprocessor):
 
 
 class MetaExtension(Extension):
-    def extendMarkdown(self, md, md_globals):
-        md.preprocessors.add("yaml-meta", MetaPreprocessor(md), '>normalize_whitespace')
+    def extendMarkdown(self, md):
+        md.preprocessors.register(
+            MetaPreprocessor(md),
+            name='yaml-meta',
+            priority=25,  # after normalize_whitespace extension
+        )
 
 
 def makeExtension(*args, **kwargs):

@@ -4,7 +4,18 @@ except ImportError:
     from mock import Mock
 import xml.etree.ElementTree as ElementTree
 
+import markdown
+
 from markdown_extra import summary
+
+
+def test_extends_markdown():
+    md = markdown.Markdown(extensions=['markdown_extra.summary'])
+
+    assert 'summary' in md.preprocessors
+    assert isinstance(md.preprocessors['summary'], summary.SummaryPreprocessor)
+    assert 'summary' in md.treeprocessors
+    assert isinstance(md.treeprocessors['summary'], summary.SummaryTreeProcessor)
 
 
 class TestSummaryPreprocessor:

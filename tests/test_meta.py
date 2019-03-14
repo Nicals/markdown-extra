@@ -3,7 +3,18 @@ try:
 except ImportError:  # python2
     from mock import Mock
 
+import markdown
+
 from markdown_extra import meta
+
+
+def test_extends_markdown():
+    md = markdown.Markdown(extensions=['markdown_extra.meta'])
+
+    assert 'yaml-meta' in md.preprocessors
+    assert isinstance(md.preprocessors['yaml-meta'], meta.MetaPreprocessor)
+    # make sure whitespaces are normalized before
+    assert md.preprocessors.get_index_for_name('normalize_whitespace') < md.preprocessors.get_index_for_name('yaml-meta')
 
 
 class TestMetaPreprocessor:

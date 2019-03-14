@@ -88,9 +88,17 @@ class SummaryTreeProcessor(Treeprocessor):
 
 
 class SummaryExtension(Extension):
-    def extendMarkdown(self, md, md_globals):
-        md.preprocessors.add('summary', SummaryPreprocessor(md), '_end')
-        md.treeprocessors.add('summary', SummaryTreeProcessor(md), '_end')
+    def extendMarkdown(self, md):
+        md.preprocessors.register(
+            SummaryPreprocessor(md),
+            name='summary',
+            priority=40,
+        )
+        md.treeprocessors.register(
+            SummaryTreeProcessor(md),
+            name='summary',
+            priority=40,
+        )
 
 
 def makeExtension(**kwargs):
