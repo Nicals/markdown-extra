@@ -110,14 +110,15 @@ class ResourcePathExtension(Extension):
         }
         super(ResourcePathExtension, self).__init__(**kwargs)
 
-    def extendMarkdown(self, md, md_globals):
-        md.treeprocessors.add(
-            'resource_path',
+    def extendMarkdown(self, md):
+        md.treeprocessors.register(
             ResourcePathTreeProcessor(
                 md,
                 resource_tags=self.getConfig('resource_tags'),
                 root_path=self.getConfig('root_path')),
-            '_end')
+            name='resource_path',
+            priority=0,  # lowest priority
+        )
 
 
 def makeExtension(**kwargs):

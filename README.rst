@@ -18,7 +18,7 @@ Markdown Extra
    :target: https://travis-ci.org/Nicals/markdown-extra
    :alt: CI status
 
-Set of extensions for ``python-markdown``.
+Set of extensions for ``python-markdown`` (>= 3.0).
 
 Features
 --------

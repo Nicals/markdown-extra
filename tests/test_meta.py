@@ -9,23 +9,23 @@ from markdown_extra import meta
 class TestMetaPreprocessor:
     def test_sets_meta_to_none_if_no_meta(self):
         preproc = meta.MetaPreprocessor()
-        preproc.markdown = Mock()
+        preproc.md = Mock()
 
         preproc.run(['A paragraph'])
 
-        assert preproc.markdown.meta is None
+        assert preproc.md.meta is None
 
     def test_extracts_meta(self):
         preproc = meta.MetaPreprocessor()
-        preproc.markdown = Mock
+        preproc.md = Mock
 
         preproc.run(['---', 'foo: bar', 'bar:', '    - baz', '---'])
 
-        assert preproc.markdown.meta == {'foo': 'bar', 'bar': ['baz']}
+        assert preproc.md.meta == {'foo': 'bar', 'bar': ['baz']}
 
     def test_removes_meta(self):
         preproc = meta.MetaPreprocessor()
-        preproc.markdown = Mock()
+        preproc.md = Mock()
 
         lines = preproc.run(['---', 'foo: bar', '---', '', 'Paragraph'])
 

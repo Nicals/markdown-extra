@@ -61,9 +61,9 @@ class SummaryPreprocessor(Preprocessor):
                 new_lines.append(line)
 
         if summary:
-            self.markdown.summary = '\n'.join(summary)
+            self.md.summary = '\n'.join(summary)
         else:
-            self.markdown.summary = None
+            self.md.summary = None
 
         return new_lines
 
@@ -73,16 +73,16 @@ class SummaryTreeProcessor(Treeprocessor):
     paragraph of the tree and uses its text as the summary.
     """
     def run(self, root):
-        if not hasattr(self.markdown, 'summary'):
-            self.markdown.summary = None
+        if not hasattr(self.md, 'summary'):
+            self.md.summary = None
 
-        if self.markdown.summary is not None:
+        if self.md.summary is not None:
             return root
 
         p = root.find('p')
 
         if p is not None:
-            self.markdown.summary = ''.join(p.itertext())
+            self.md.summary = ''.join(p.itertext())
 
         return root
 

@@ -74,12 +74,12 @@ def extract_meta(lines):
             if new_lines or not (not line and not new_lines):
                 new_lines.append(line)
 
-    return yaml.load('\n'.join(meta)), new_lines
+    return yaml.safe_load('\n'.join(meta)), new_lines
 
 
 class MetaPreprocessor(Preprocessor):
     def run(self, lines):
-        self.markdown.meta, content_lines = extract_meta(lines)
+        self.md.meta, content_lines = extract_meta(lines)
 
         return content_lines
 
