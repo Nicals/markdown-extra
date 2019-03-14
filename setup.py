@@ -7,7 +7,7 @@ project_dir = os.path.dirname(os.path.abspath(__file__))
 
 setup(
     name='markdown-extra',
-    version='1.0.0.post1',
+    version='1.0.1',
     description='Set of extensions for markdown',
     long_description=open(os.path.join(project_dir, 'README.rst')).read(),
     long_description_content_type='text/x-rst',
