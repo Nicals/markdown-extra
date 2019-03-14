@@ -7,11 +7,11 @@ project_dir = os.path.dirname(os.path.abspath(__file__))
 
 setup(
     name='markdown-extra',
-    version='1.0.0',
+    version='1.0.0.post1',
     description='Set of extensions for markdown',
     long_description=open(os.path.join(project_dir, 'README.rst')).read(),
     long_description_content_type='text/x-rst',
-    url='https://github.com/Nicals/markdown-meta',
+    url='https://github.com/Nicals/markdown-extra',
     author='Nicolas Appriou',
     author_email='nicolas.appriou@gmail.com',
     license='MIT',
