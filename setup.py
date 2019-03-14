@@ -10,6 +10,7 @@ setup(
     version='1.0.0',
     description='Set of extensions for markdown',
     long_description=open(os.path.join(project_dir, 'README.rst')).read(),
+    long_description_content_type='text/x-rst',
     url='https://github.com/Nicals/markdown-meta',
     author='Nicolas Appriou',
     author_email='nicolas.appriou@gmail.com',
